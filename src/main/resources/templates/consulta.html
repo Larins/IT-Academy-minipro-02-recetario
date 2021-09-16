@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="ISO-8859-1">
+      <title>LISTADO DE RECETAS</title>
+   </head>
+   <body>
+      <h3>Login: <span th:text="${usuario.nombre}"></span> - Password: <span th:text="${usuario.password}"></span></h3>
+      
+      <h1>LISTADO DE RECETAS</h1>
+      <table border=1>
+         <thead>
+            <tr><th> Id <th> Nombre <th> Ingredientes <th> Imagen <th> Preparación <th> Tipo <th> Borrado <th> Modificar
+            </tr>
+         </thead>
+         <tbody>
+            <tr th:if="${recetas.empty}">
+               <td colspan="2">No hay recetas disponibles</td>
+            </tr>
+            <tr th:each="receta : ${recetas}">
+               <td><span th:text="${receta.id}"></span></td>
+               <td><span th:text="${receta.nombre}"></span></td>
+               <td><span th:text="${receta.ingredientes}"></span></td>
+               <td><span th:text="${receta.imagen}"></span></td>
+               <td><span th:text="${receta.preparacion}"></span></td>
+               <td><span th:text="${receta.tipo}"></span></td>
+               <td><a th:href="@{/borrado/}+${receta.id}">Borrar</a></td>
+               <td><a th:href="@{/modificar/}+${receta.id}">Modificar</a></td>
+            </tr>
+         </tbody>
+      </table>
+      <form th:action="${action}" th:object="${receta}" method="post">
+         <br>ID: <input type=text th:field="*{id}" th:value="*{id}">
+         <br>TITULO: <input type=text th:field="*{nombre}" th:value="*{nombre}">
+         <br>AUTOR: <input type=text th:field="*{ingredientes}" th:value="*{ingredientes}">
+         <br>EDITORIAL: <input type=text th:field="*{imagen}" th:value="*{imagen}">
+         <br>FECHA: <input type=text th:field="*{preparacion}" th:value="*{preparacion}">
+         <br>TEMATICA:
+            <select th:field="*{tipo}">
+               <option th:each="tipo : ${T(com.example.demo.bean.Tematica).values()}"
+                  th:value="${tipo}"
+                  th:text="${tipo.nombre}">
+               </option>
+            </select>
+         <br><input type=submit name=submit th:value="${boton}">
+      </form>
+   </body>
+</html>
