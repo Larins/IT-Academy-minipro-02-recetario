@@ -1,5 +1,6 @@
 package com.example.demo.bean;
 
+import javax.persistence.*;
 
 @Entity
 @Table(name="recetas")
@@ -20,7 +21,7 @@ public class Receta {
 	//private Tipo tipo; // Para usar combobox comentamos esta declaración y usamos la siguiente:
 	@Column(name="TIPO")
 	@Enumerated(EnumType.STRING)
-	private Tipo tipo;*/
+	private Tipo tipo;
 
 	public Receta(int id, String nombre, String ingredientes, String imagen, String preparacion, Tipo tipo) {
 		this.id = id;

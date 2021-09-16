@@ -51,7 +51,7 @@ public class BaseDatosService implements IBaseDatos {
 		boolean check=false; //Función JPA
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String conex="jdbc:mysql://localhost:3306/biblioteca_online";
+			String conex="jdbc:mysql://localhost:3306/recetas";
 			Connection conexion = DriverManager.getConnection (conex, "root", "");
 			java.sql.Statement s = conexion.createStatement();
 			//Código original:

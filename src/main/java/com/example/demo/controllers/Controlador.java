@@ -19,10 +19,10 @@ import com.example.demo.repository.BaseDatosService;
 @RequestMapping("") // localhost:8080
 public class Controlador {
 
-	@GetMapping("/")
+	@GetMapping("/")	
 	public String iniciar(Model model) {
-		model.addAttribute("titulo", "FORMULARIO DE ACCESO");
-		model.addAttribute("info1", "Introduce los datos de acceso:");
+		model.addAttribute("titulo","FORMULARIO DE ACCESO");
+		model.addAttribute("info1","Introduce los datos de acceso:");
 		return "login";
 	}
 
@@ -35,11 +35,10 @@ public class Controlador {
 	@PostMapping("/")
 	public String login(Usuario usuario, Model model) {
 		if (bd.compruebaUsuario(usuario.getNombre(), usuario.getPassword())) {
-			ArrayList<Receta> Recetas = bd.getRecetas();
+			ArrayList<Receta> recetas = bd.getRecetas();
 			model.addAttribute("usuario", usuario);
 			this.usuario = usuario;
-			model.addAttribute("Recetas", Recetas);
-			model.addAttribute("Receta", new Receta(0,"",Posicion.JUNIOR));
+			model.addAttribute("recetas", recetas);
 			model.addAttribute("boton", "Insertar Receta");
 			model.addAttribute("action", "/insertar");
 			return "consulta";
@@ -50,14 +49,12 @@ public class Controlador {
 
 	// Handler insertar (CREATE)
 	@PostMapping("/insertar")
-	public String insertar(Receta Receta, Model model) {
-		Receta.setSalario(Receta.getPosicion().getSalario());
-		bd.inserta(Receta);
-		ArrayList<Receta> Recetas = bd.getRecetas();
+	public String insertar(Receta receta, Model model) {
+		bd.inserta(receta);
+		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
-		model.addAttribute("Recetas", Recetas);
-		model.addAttribute("Receta", new Receta(0,"",Posicion.JUNIOR));
+		model.addAttribute("Recetas", recetas);
 		model.addAttribute("boton", "Insertar Receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
@@ -67,11 +64,10 @@ public class Controlador {
 	@GetMapping("/borrado/{id}")
 	public String borrar(@PathVariable int id, Model model) {
 		bd.borrar(id);
-		ArrayList<Receta> Recetas = bd.getRecetas();
+		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
-		model.addAttribute("Recetas", Recetas);
-		model.addAttribute("Receta", new Receta(0,"",Posicion.JUNIOR));
+		model.addAttribute("recetas", recetas);
 		model.addAttribute("boton", "Insertar Receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
@@ -83,7 +79,7 @@ public class Controlador {
 		Receta Receta = bd.getReceta(id);
 		ArrayList<Receta> Recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
-		this.usuario = usuario;
+		//this.usuario = usuario;
 		model.addAttribute("Recetas", Recetas);
 		model.addAttribute("Receta", Receta);
 		model.addAttribute("boton", "Actualizar Receta");
@@ -93,14 +89,12 @@ public class Controlador {
 
 	// Handler modificar POST (enviar formulario) (UPDATE)
 	@PostMapping("/modificar")
-	public String modificar2(Receta Receta, Model model) {
-		Receta.setSalario(Receta.getPosicion().getSalario());
-		bd.modifica(Receta);
-		ArrayList<Receta> Recetas = bd.getRecetas();
+	public String modificar2(Receta receta, Model model) {
+		bd.modifica(receta);
+		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
 		// this.usuario = usuario;
-		model.addAttribute("Recetas", Recetas);
-		model.addAttribute("Receta", new Receta(0,"",Posicion.JUNIOR));
+		model.addAttribute("recetas", recetas);		
 		model.addAttribute("boton", "Actualizar Receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";

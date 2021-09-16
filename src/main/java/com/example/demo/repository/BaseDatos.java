@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.bean.Receta;
 
-public interface BaseDatos extends JpaRepository<Libro, Integer> {
+public interface BaseDatos extends JpaRepository<Receta, Integer> {
 	/*
 	public void inserta(Receta receta);		//SAVE
 	public void borrar(int id);				//DELETE BY ID
