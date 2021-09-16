@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>LISTADO DE RECETAS</title>
+</head>
+<body 
+	 style="background-color:LightYellow;
+	 font-family:monospace;
+	 color:DarkOliveGreen;
+	 text-align:center;">
+	<h5>
+		Login: 
+			<span 
+				th:text="${usuario.nombre}">
+			</span> 
+		- Password: 
+			<span
+				th:text="${usuario.password}">
+			</span>
+	</h5>
+
+	<h1>LISTADO DE RECETAS</h1>
+	<table style="width:100%"; border=1>
+		<thead>
+			<tr>
+				<th>Id
+				<th>Nombre
+				<th>Ingredientes
+				<th>Imagen
+				<th>Preparacion
+				<th>Tipo
+				<th>Borrar
+				<th>Modificar
+			</tr>
+		</thead>
+		<tbody>
+            <tr th:if="${recetas.empty}">
+               <td colspan="2">No hay recetas disponibles</td>
+            </tr>
+			<tr th:each="receta : ${recetas}">
+				<td><span th:text="${receta.id}"></span></td>
+				<td><span th:text="${receta.nombre}"></span></td>
+				<td><span th:text="${receta.ingredientes}"></span></td>
+				<td><span th:text="${receta.imagen}"></span></td>
+				<td><span th:text="${receta.preparacion}"></span></td>
+				<td><span th:text="${receta.tipo.nombre}"></span></td>
+				<td><span th:text="${receta.tipo.id}"></span></td>
+				<td><a th:href="@{/borrado/}+${receta.id}">Borrar</a></td>
+				<td><a th:href="@{/modificar/}+${receta.id}">Modificar</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<form style="text-align: left; display:flex; flex-direction: column; align-items: center"
+		th:action="${action}" 
+		th:object="${receta}" 
+		method="post">
+	<br>
+		ID (autom&aacutetico):
+		<br>          
+			<input 
+				type=text 
+				th:field="*{id}"     
+				value="*{id}" read>
+			<br>
+		NOMBRE DE LA RECETA: 
+			<input 
+				type=text 
+				th:field="*{nombre}" 
+				value="*{nombre}">
+			<br>		
+		POSICION:		
+			<select th:field="*{tipo}">
+				<option
+					th:each="tipo : ${T(com.example.demo.bean.Tipo).values()}"
+					th:value="${tipo}" 
+					th:text="${tipo.nombre}">
+				</option>						
+			</select> 
+			<br>
+		<br><input type=submit name=submit th:value="${boton}">
+		<br>
+	</form>
+	<footer style="color:Teal;text-align:center;">
+		<ul>
+			<hr style="border:30px;"><hr style="color:Teal;">
+			<br>Lara Saiz Moya - IT Academy - Septiembre 2021
+		</ul>
+	</footer>
+</body>
+</html>
