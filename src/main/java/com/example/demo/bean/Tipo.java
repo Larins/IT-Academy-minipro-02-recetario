@@ -1,20 +1,32 @@
 package com.example.demo.bean;
 
-public enum Tipo {
+public enum Tipo { 
 	
-	OMNIVORA("OMNIVORA"), VEGETARIANA("VEGETARIANA"), VEGANA("VEGANA");
+	OMNIVORA("OMNIVORA", 1), VEGETARIANA("VEGETARIANA", 2), VEGANA("VEGANA", 3);
+	
+	private String dieta;
+	private int num;
 
-	private String nombre;
-
-	private Tipo(String dieta) {
-		this.nombre = dieta;
+	private Tipo(String dieta, int num) {
+		this.dieta = dieta;
+		this.num = num;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getDieta() {
+		return dieta;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setDieta(String dieta) {
+		this.dieta = dieta;
 	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
+	
 }

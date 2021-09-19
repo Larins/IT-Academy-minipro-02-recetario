@@ -25,27 +25,28 @@
 		<thead>
 			<tr>
 				<th>Id
+				<th>Tipo de dieta
 				<th>Nombre
 				<th>Ingredientes
-				<th>Imagen
 				<th>Preparacion
-				<th>Tipo
+				<th>Imagen
+				<!-- <th>Num  -->
 				<th>Borrar
 				<th>Modificar
 			</tr>
 		</thead>
 		<tbody>
-            <tr th:if="${recetas.empty}">
-               <td colspan="2">No hay recetas disponibles</td>
-            </tr>
+			<tr th:if="${recetas.empty}">
+				<td colspan="2">No hay recetas disponibles</td>
+			</tr>
 			<tr th:each="receta : ${recetas}">
 				<td><span th:text="${receta.id}"></span></td>
+				<td><span th:text="${receta.tipo.dieta}"></span></td>
 				<td><span th:text="${receta.nombre}"></span></td>
 				<td><span th:text="${receta.ingredientes}"></span></td>
-				<td><span th:text="${receta.imagen}"></span></td>
 				<td><span th:text="${receta.preparacion}"></span></td>
-				<td><span th:text="${receta.tipo.nombre}"></span></td>
-				<td><span th:text="${receta.tipo.id}"></span></td>
+				<td><span th:text="${receta.imagen}"></span></td>
+				<!-- <td><span th:text="${receta.tipo.num}"></span></td> -->
 				<td><a th:href="@{/borrado/}+${receta.id}">Borrar</a></td>
 				<td><a th:href="@{/modificar/}+${receta.id}">Modificar</a></td>
 			</tr>
@@ -63,21 +64,39 @@
 				th:field="*{id}"     
 				value="*{id}" read>
 			<br>
-		NOMBRE DE LA RECETA: 
+		RECETA: 
 			<input 
 				type=text 
 				th:field="*{nombre}" 
 				value="*{nombre}">
 			<br>		
-		POSICION:		
+		INGREDIENTES: 
+			<input 
+				type=text 
+				th:field="*{ingredientes}" 
+				value="*{ingredientes}">
+			<br>
+		PREPARACION: 
+			<input 
+				type=text 
+				th:field="*{preparacion}" 
+				value="*{preparacion}">
+			<br>
+		TIPO DE DIETA:		
 			<select th:field="*{tipo}">
 				<option
 					th:each="tipo : ${T(com.example.demo.bean.Tipo).values()}"
 					th:value="${tipo}" 
-					th:text="${tipo.nombre}">
+					th:text="${tipo.dieta}">
 				</option>						
 			</select> 
 			<br>
+		IMAGEN: 
+			<input 
+				type=text 
+				th:field="*{imagen}" 
+				value="*{imagen}">
+			<br>	
 		<br><input type=submit name=submit th:value="${boton}">
 		<br>
 	</form>

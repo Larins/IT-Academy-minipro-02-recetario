@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>PLANTILLA: LISTADO</title>
+</head>
+<body 
+	 style="background-color:LightYellow;
+	 font-family:monospace;
+	 color:DarkOliveGreen;
+	 text-align:center;">
+	<h5>
+		Login: 
+			<span 
+				th:text="${usuario.nombre}">
+			</span> 
+		- Password: 
+			<span
+				th:text="${usuario.password}">
+			</span>
+	</h5>
+
+	<h1>PLANTILLA: LISTADO</h1>
+	<table style="width:100%"; border=1>
+		<thead>
+			<tr>
+				<th>Id
+				<th>Nombre
+				<th>Posicion
+				<th>Salario
+				<th>SalarioBD
+				<th>Borrar
+				<th>Modificar
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${empleados.empty}">
+				<td colspan="2">No hay empleados disponibles</td>
+			</tr>
+			<tr th:each="empleado : ${empleados}">
+				<td><span th:text="${empleado.id}"></span></td>
+				<td><span th:text="${empleado.nombre}"></span></td>
+				<td><span th:text="${empleado.posicion.puesto}"></span></td>
+				<td><span th:text="${empleado.posicion.salario}"></span></td>
+				<td><span th:text="${empleado.salario}"></span></td>
+				<td><a th:href="@{/borrado/}+${empleado.id}">Borrar</a></td>
+				<td><a th:href="@{/modificar/}+${empleado.id}">Modificar</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<form style="text-align: left; display:flex; flex-direction: column; align-items: center"
+		th:action="${action}" 
+		th:object="${empleado}" 
+		method="post">
+	<br>
+		ID (autom&aacutetico):
+		<br>          
+			<input 
+				type=text 
+				th:field="*{id}"     
+				value="*{id}" read>
+			<br>
+		NOMBRE DE LA PERSONA: 
+			<input 
+				type=text 
+				th:field="*{nombre}" 
+				value="*{nombre}">
+			<br>		
+		POSICION:		
+			<select th:field="*{posicion}">
+				<option
+					th:each="posicion : ${T(com.example.demo.bean.Posicion).values()}"
+					th:value="${posicion}" 
+					th:text="${posicion.puesto}">
+				</option>						
+			</select> 
+			<br>
+	   	SALARIO (autom&aacutetico): 
+	   		<br>
+	   		<input 
+	   			type=text 
+	   			name=salario 
+	   			th:value="*{posicion?.salario}" readonly> 
+			<br>
+		<br><input type=submit name=submit th:value="${boton}">
+		<br>
+	</form>
+	<footer style="color:Teal;text-align:center;">
+		<ul>
+			<hr style="border:30px;"><hr style="color:Teal;">
+			<br>Lara Saiz Moya - IT Academy - Julio 2021
+		</ul>
+	</footer>
+</body>
+</html>

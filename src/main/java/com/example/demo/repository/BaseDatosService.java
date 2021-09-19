@@ -8,9 +8,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.bean.Receta;
 import com.example.demo.service.IBaseDatos;
+import com.mysql.cj.xdevapi.Statement;
 
 @Service
 public class BaseDatosService implements IBaseDatos {
@@ -51,7 +51,7 @@ public class BaseDatosService implements IBaseDatos {
 		boolean check=false; //Función JPA
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String conex="jdbc:mysql://localhost:3306/recetas";
+			String conex="jdbc:mysql://localhost:3306/plantilla";
 			Connection conexion = DriverManager.getConnection (conex, "root", "");
 			java.sql.Statement s = conexion.createStatement();
 			//Código original:

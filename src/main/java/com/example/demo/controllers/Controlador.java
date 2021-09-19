@@ -12,17 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.bean.Receta;
+import com.example.demo.bean.Tipo;
 import com.example.demo.bean.Usuario;
 import com.example.demo.repository.BaseDatosService;
 
-@Controller // Con la etiqueta, el controlador se convierte en un servlet que atiende peticiones HTTP
+@Controller // Lo convertimos en un servlet que atiende peticiones HTTP
 @RequestMapping("") // localhost:8080
 public class Controlador {
 
-	@GetMapping("/")	
+	@GetMapping("/")
 	public String iniciar(Model model) {
-		model.addAttribute("titulo","FORMULARIO DE ACCESO");
-		model.addAttribute("info1","Introduce los datos de acceso:");
+		model.addAttribute("titulo", "FORMULARIO DE ACCESO");
+		model.addAttribute("info1", "Introduce los datos de acceso:");
 		return "login";
 	}
 
@@ -39,7 +40,8 @@ public class Controlador {
 			model.addAttribute("usuario", usuario);
 			this.usuario = usuario;
 			model.addAttribute("recetas", recetas);
-			model.addAttribute("boton", "Insertar Receta");
+			model.addAttribute("receta", new Receta(0,"","","","", Tipo.OMNIVORA));
+			model.addAttribute("boton", "Insertar receta");
 			model.addAttribute("action", "/insertar");
 			return "consulta";
 		} else
@@ -47,20 +49,22 @@ public class Controlador {
 		return "login";
 	}
 
-	// Handler insertar (CREATE)
+	// HANDLER INSERCION
 	@PostMapping("/insertar")
 	public String insertar(Receta receta, Model model) {
+		receta.setNum(receta.getTipo().getNum());
 		bd.inserta(receta);
 		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
-		model.addAttribute("Recetas", recetas);
-		model.addAttribute("boton", "Insertar Receta");
+		model.addAttribute("recetas", recetas);
+		model.addAttribute("receta", new Receta(0,"","","","", Tipo.OMNIVORA));
+		model.addAttribute("boton", "Insertar receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
 	}
 
-	// Handler borrar (DELETE)
+	// Handler borrado
 	@GetMapping("/borrado/{id}")
 	public String borrar(@PathVariable int id, Model model) {
 		bd.borrar(id);
@@ -68,34 +72,37 @@ public class Controlador {
 		model.addAttribute("usuario", this.usuario);
 		this.usuario = usuario;
 		model.addAttribute("recetas", recetas);
-		model.addAttribute("boton", "Insertar Receta");
+		model.addAttribute("receta", new Receta(0,"","","","", Tipo.OMNIVORA));
+		model.addAttribute("boton", "Insertar receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
 	}
 
-	// Handler modificar GET (rellenar formulario) (READ)
+	// Handler modificar GET (rellenar formulario)
 	@GetMapping("/modificar/{id}")
 	public String modificar(@PathVariable int id, Model model) {
-		Receta Receta = bd.getReceta(id);
-		ArrayList<Receta> Recetas = bd.getRecetas();
+		Receta receta = bd.getReceta(id);
+		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
-		//this.usuario = usuario;
-		model.addAttribute("Recetas", Recetas);
-		model.addAttribute("Receta", Receta);
-		model.addAttribute("boton", "Actualizar Receta");
+		this.usuario = usuario;
+		model.addAttribute("recetas", recetas);
+		model.addAttribute("receta", receta);
+		model.addAttribute("boton", "Actualizar receta");
 		model.addAttribute("action", "/modificar");
 		return "consulta";
 	}
 
-	// Handler modificar POST (enviar formulario) (UPDATE)
+	// Handler modificar POST (enviar formulario)
 	@PostMapping("/modificar")
 	public String modificar2(Receta receta, Model model) {
+		receta.setNum(receta.getTipo().getNum());
 		bd.modifica(receta);
 		ArrayList<Receta> recetas = bd.getRecetas();
 		model.addAttribute("usuario", this.usuario);
 		// this.usuario = usuario;
-		model.addAttribute("recetas", recetas);		
-		model.addAttribute("boton", "Actualizar Receta");
+		model.addAttribute("recetas", recetas);
+		model.addAttribute("receta", new Receta(0,"","","","", Tipo.OMNIVORA));
+		model.addAttribute("boton", "Actualizar receta");
 		model.addAttribute("action", "/insertar");
 		return "consulta";
 	}
